@@ -13,20 +13,24 @@ func (app *Config) Authenticate(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
+	fmt.Println("Start Logics!!")
 	err := app.readJson(w, r, &requestPayload)
 	if err != nil {
-		_ = app.errorJson(w, err, http.StatusBadRequest)
+		app.errorJson(w, err, http.StatusBadRequest)
 		return
 	}
 
 	// validate the user against the database
+	fmt.Println("Get Email!!", requestPayload)
 	user, err := app.Models.User.GetByEmail(requestPayload.Email)
 	if err != nil {
 		app.errorJson(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return
 	}
 
+	fmt.Println("Match Password Start!!")
 	valid, err := user.PasswordMatches(requestPayload.Password)
+	fmt.Println("Match Password End!!")
 	if err != nil || !valid {
 		app.errorJson(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return

@@ -1,10 +1,7 @@
 FROM alpine:latest
 
-# Set up working directory
-WORKDIR /app
+RUN mkdir /app
 
-# Copy the built application binary
-COPY authApp /app/authApp
+COPY authApp /app
 
-# Set the entry point for the container
-CMD [ "/app/authApp" ]
+CMD [ "/app/authApp"]

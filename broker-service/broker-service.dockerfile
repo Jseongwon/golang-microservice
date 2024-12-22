@@ -1,13 +1,7 @@
 FROM alpine:latest
 
-# Set up working directory
-WORKDIR /app
+RUN mkdir /app
 
-# Copy the built application binary
-COPY brokerApp /app/brokerApp
+COPY brokerApp /app
 
-# Expose the application port
-EXPOSE 8080
-
-# Set the entry point for the container
-CMD [ "/app/brokerApp" ]
+CMD [ "/app/brokerApp"]
